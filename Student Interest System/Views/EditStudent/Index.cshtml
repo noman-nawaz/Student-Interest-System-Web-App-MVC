@@ -1,0 +1,184 @@
+﻿@model Student_Interest_System_Mvc.Models.Student;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/css/addstudent.css" rel="stylesheet" media="all" />
+</head>
+<body class="sub_page">
+
+    <div class="register">
+        <h1>Edit Student</h1>
+    </div>
+
+    <div class="registration-form">
+        <h2>Edit Student Form</h2>
+
+        <form asp-action="Index" asp-controller="EditStudent" method="post">
+            <table>
+                <tr>
+                    <td><label asp-for="FullName"></label></td>
+                    <td><input asp-for="FullName" value="@Model.FullName" /></td>
+                    <td><span asp-validation-for="FullName" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="RollNumber"></label></td>
+                    <td><input asp-for="RollNumber" value="@Model.RollNumber" /></td>
+                    <td><span asp-validation-for="RollNumber" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="EmailAddress"></label></td>
+                    <td><input asp-for="EmailAddress" value="@Model.EmailAddress" /></td>
+                    <td><span asp-validation-for="EmailAddress" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="Gender"></label></td>
+                    <td>
+                        <select asp-for="Gender">
+                            <option value="Male" >Male</option>
+                            <option value="Female" >Female</option>
+                        </select>
+                    </td>
+                    <td><span asp-validation-for="Gender" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="DateOfBirth"></label></td>
+                    <td><input asp-for="DateOfBirth" type="date" value="@Model.DateOfBirth.ToString("yyyy-MM-dd")" /></td>
+                    <td><span asp-validation-for="DateOfBirth" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="City"></label></td>
+                    <td>
+                        <select asp-for="City">
+                            <option value="Karachi">Karachi</option>
+                            <option value="Lahore">Lahore</option>
+                            <option value="Faisalabad">Faisalabad</option>
+                            <option value="Multan">Multan</option>
+                            <option value="Rawalpindi">Rawalpindi</option>
+                            <option value="Peshawar">Peshawar</option>
+                            <option value="Quetta">Quetta</option>
+                        </select>
+                    </td>
+                    <td><span asp-validation-for="City" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+
+                <tr>
+                    <td><label asp-for="Interest"></label></td>
+                    <td>
+                        <select asp-for="Interest" id="interestSelect">
+                            <option value="">-- Select an interest --</option>
+                            @if (ViewBag.InterestsFromDatabase != null)
+                            {
+                                foreach (var interest in ViewBag.InterestsFromDatabase)
+                                {
+                                    <option value="@interest">@interest</option>
+                                }
+                            }
+                            <option value="Other">Other</option>
+                        </select>
+                        <input asp-for="Interest" id="otherInterest" name="Interest" style="display:none" />
+                    </td>
+                    <td><span asp-validation-for="Interest" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="Department"></label></td>
+                    <td>
+                        <select asp-for="Department">
+                            <option value="Information Technology">Information Technology</option>
+                            <option value="Pharmacy">Pharmacy</option>
+                            <option value="Biotechnology">Biotechnology</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Biology">Biology</option>
+                        </select>
+                    </td>
+                    <td><span asp-validation-for="Department" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="DegreeTitle"></label></td>
+                    <td>
+                        <select asp-for="DegreeTitle">
+                            <option value="Post Graduate">Post Graduate</option>
+                            <option value="MS">MS</option>
+                            <option value="BS">BS</option>
+                            <option value="MSc">MSc</option>
+                            <option value="BSc">BSc</option>
+                            <option value="Intermediate">Intermediate</option>
+                        </select>
+                    </td>
+                    <td><span asp-validation-for="DegreeTitle" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="Subject"></label></td>
+                    <td><input asp-for="Subject" value="@Model.Subject" /></td>
+                    <td><span asp-validation-for="Subject" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="StartDate"></label></td>
+                    <td><input asp-for="StartDate" type="date" value="@Model.StartDate.ToString("yyyy-MM-dd")" /></td>
+                    <td><span asp-validation-for="StartDate" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="EndDate"></label></td>
+                    <td><input asp-for="EndDate" type="date" value="@Model.EndDate.ToString("yyyy-MM-dd")" /></td>
+                    <td><span asp-validation-for="EndDate" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+            </table>
+            <input type="submit" value="Update" class="btn btn-success" />
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var interestSelect = document.getElementById("interestSelect");
+            var otherInterestInput = document.getElementById("otherInterest");
+
+            interestSelect.addEventListener("change", function () {
+                if (interestSelect.value === "Other") {
+                    otherInterestInput.style.display = "inline";
+                    otherInterestInput.setAttribute("name", "Interest");
+                    otherInterestInput.setAttribute("required", "required");
+                } else {
+                    otherInterestInput.style.display = "none";
+                    otherInterestInput.removeAttribute("name");
+                    otherInterestInput.removeAttribute("required");
+                }
+            });
+
+            otherInterestInput.addEventListener("input", function () {
+                interestSelect.value = otherInterestInput.value;
+            });
+        });
+    </script>
+
+</body>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+</html>

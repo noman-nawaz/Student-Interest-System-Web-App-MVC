@@ -1,0 +1,199 @@
+﻿@model Student_Interest_System_Mvc.Models.Student;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/css/addstudent.css" rel="stylesheet" media="all" />
+    <script>
+        function updateInterestField() {
+            var interestSelect = document.getElementById("interestSelect");
+            var newInterestField = document.getElementById("newInterestField");
+            var addButton = document.getElementById("addButton");
+
+            if (interestSelect.value === "Other") {
+                newInterestField.style.display = "block";
+                addButton.style.display = "inline-block";
+            } else {
+                newInterestField.style.display = "none";
+                addButton.style.display = "none";
+            }
+        }
+
+        function addNewInterestToDropdown() {
+            var newInterestField = document.getElementById("newInterestField");
+            var newInterest = newInterestField.value;
+            var interestSelect = document.getElementById("interestSelect");
+            var addButton = document.getElementById("addButton");
+
+            // Add the new interest to the dropdown
+            var option = document.createElement("option");
+            option.text = newInterest;
+            option.value = newInterest;
+            interestSelect.add(option);
+
+            // Clear the new interest field
+            newInterestField.value = "";
+
+            // Hide the button after adding the interest
+            addButton.style.display = "none";
+        }
+    </script>
+</head>
+<body class="sub_page">
+
+    <div class="register">
+        <h1>Add Student</h1>
+    </div>
+
+    <div class="registration-form">
+        <h2>Add Student Form</h2>
+
+        <form asp-action="Index" asp-controller="AddStudent" method="post">
+            <table>
+                <tr>
+                    <td><label asp-for="FullName"></label></td>
+                    <td><input asp-for="FullName" /></td>
+                    <td><span asp-validation-for="FullName" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="RollNumber"></label></td>
+                    <td><input asp-for="RollNumber" /></td>
+                    <td><span asp-validation-for="RollNumber" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="EmailAddress"></label></td>
+                    <td><input asp-for="EmailAddress" /></td>
+                    <td><span asp-validation-for="EmailAddress" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="Gender"></label></td>
+                    <td>
+                        <select asp-for="Gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </td>
+                    <td><span asp-validation-for="Gender" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="DateOfBirth"></label></td>
+                    <td><input asp-for="DateOfBirth" type="date" /></td>
+                    <td><span asp-validation-for="DateOfBirth" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="City"></label></td>
+                    <td>
+                        <select asp-for="City">
+                            <option value="Karachi">Karachi</option>
+                            <option value="Lahore">Lahore</option>
+                            <option value="Faisalabad">Faisalabad</option>
+                            <option value="Multan">Multan</option>
+                            <option value="Rawalpindi">Rawalpindi</option>
+                            <option value="Peshawar">Peshawar</option>
+                            <option value="Quetta">Quetta</option>
+                        </select>
+                    </td>
+                    <td><span asp-validation-for="City" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="Interest"></label></td>
+                    <td>
+                        <select asp-for="Interest" id="interestSelect" onchange="updateInterestField()">
+                            <option value="">-- Select an interest --</option>
+                            @if (ViewBag.InterestsFromDatabase != null)
+                            {
+                                foreach (var interest in ViewBag.InterestsFromDatabase)
+                                {
+                                    <option value="@interest">@interest</option>
+                                }
+                            }
+                            <option value="Other">Other</option>
+                        </select>
+                        <input type="text" id="newInterestField" style="display:none;" placeholder="Enter new interest" />
+                        <button type="button" id="addButton" style="display:none;" onclick="addNewInterestToDropdown()">Add</button>
+                    </td>
+                    <td><span asp-validation-for="Interest" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="Department"></label></td>
+                    <td>
+                        <select asp-for="Department">
+                            <option value="Information Technology">Information Technology</option>
+                            <option value="Pharmacy">Pharmacy</option>
+                            <option value="Biotechnology">Biotechnology</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Biology">Biology</option>
+                        </select>
+                    </td>
+                    <td><span asp-validation-for="Department" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="DegreeTitle"></label></td>
+                    <td>
+                        <select asp-for="DegreeTitle">
+                            <option value="Post Graduate">Post Graduate</option>
+                            <option value="MS">MS</option>
+                            <option value="BS">BS</option>
+                            <option value="MSc">MSc</option>
+                            <option value="BSc">BSc</option>
+                            <option value="Intermediate">Intermediate</option>
+                        </select>
+                    </td>
+                    <td><span asp-validation-for="DegreeTitle" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="Subject"></label></td>
+                    <td><input asp-for="Subject" /></td>
+                    <td><span asp-validation-for="Subject" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="StartDate"></label></td>
+                    <td><input asp-for="StartDate" type="date" /></td>
+                    <td><span asp-validation-for="StartDate" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label asp-for="EndDate"></label></td>
+                    <td><input asp-for="EndDate" type="date" /></td>
+                    <td><span asp-validation-for="EndDate" class="text-danger"></span></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td colspan="4">
+                        <br /> 
+                        <input type="submit" value="Register" class="btn btn-success btn-margin" />
+                        <br /> <br />
+                        <a href="@Url.Action("Index", "StudentList")" class="btn btn-danger btn-margin">Cancel</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+</html>
